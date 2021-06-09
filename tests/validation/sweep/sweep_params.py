@@ -222,6 +222,7 @@ params = {
                     #num of crossing-over events (i.e. recombs) to simulate
                     'n_recomb_sims':            10_000,
                     'allow_ad_hoc_recomb':      True,
+                    'jitter_breakpoints':       False,
                     #whether to save mutation logs
                     'mut_log':                  False,
 

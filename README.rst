@@ -2,27 +2,13 @@
 Geonomics
 *********
 
+.. image:: ./img/gnx_mini_350dpi.png
+   :width: 100
+   :align: left
+
 Forward-time, individual-based, landscape genomic simulation in Python.
 
-.. code-block:: python
          
-       .                  .   ::::::          :::    :: :::::::::::.           .
-                    .::::::    ::::   :::      ::    :: :: ::::::::::: ::.                 .
-    .      .     .:::::::::     ::            ::   :::::::::::::::::::::::::.        .   
-               .::::::::::                      :::::::::: :::::: ::::::::  ::.
-         .   .  : ::::  ::                    ::::  : ::    :::::::: : ::  :    .      .
-            . 55555 :3333: 00000   44   44   00000   44   44 111111  66666 55555 .
-           . 55     33    00   00  444  44  00   00  44   44   11   66     55     .         .
- .         . 55     33   00     00 44 4 44 00     00 444 444   11   66     555555 .
-           . 55 555 3333 00     00 44  444 00     00 44 4 44   11   66         55 .
-           . 55   5 33    00   00  44   44  00   00  44   44   11   66        555 .     .
-            . 55555 :3333: 00000   44   44   00000   44   44 111111  66666 55555 .         .
-      .      .    : ::::::::               :::::::::: ::              ::  :   : .
-     .         .:    :::::                    :::::: :::             :::::::  .      .
-  .              .    :::                      :::::  ::              ::::: .              . 
-           .        .  ::                      ::::                      .
-                          . ::                                     .                .
-          
  
 **Geonomics** allows users to build and run arbitrarily complex, forward-time,
 agent-based, and spatially explicit simulations for landscape genomics. It is
@@ -32,6 +18,7 @@ and customizability.
 
 We will continue to expand and add functionality in future versions. Please
 contact us with questions, suggestions, or requests!
+
 
 Main Features
 -------------
@@ -76,7 +63,7 @@ Quickstart
 For impatient beginners, the following code will run Geonomics' default model::
 
   >>> import geonomics as gnx
-  >>> mod = gnx.run_default_model()
+  >>> mod = gnx.run_default_model(delete_params_file=False)
 
 This will build and run **geonomics**' default model, return its `Model` object
 as `mod`, and leave its parameters file in your current working directory under
@@ -151,10 +138,39 @@ boxes are optional.
 Attribution
 ***********
 
-This package was written by Drew Ellison Hart, as part of his PhD work.
+This package was written by Drew Ellison Terasaki Hart, as part of his PhD work.
 It is available to freely distribute and modify, with proper
 attribution, under the MIT License. Should you have any questons or
-concerns, please feel free to get in touch! (drew.hart <at> berkeley <dot> edu)
+concerns, please feel free to get in touch! (drew <dot> hart <at> berkeley <dot> edu)
+
+Should you use Geonomics for research, education, or any other purpose, please
+cite as:
+
+       Terasaki Hart, D.E., Bishop, A.P., Wang, I.J. 2021. Geonomics:
+       forward-time, spatially explicit, and arbitrarily complex
+       landscape genomic simulations. Manuscript submitted for publication.
+
+
+   
+.. code-block:: python
+         
+       .                  .   ::::::          :::    :: :::::::::::.           .
+                    .::::::    ::::   :::      ::    :: :: ::::::::::: ::.                 .
+    .      .     .:::::::::     ::            ::   :::::::::::::::::::::::::.        .   
+               .::::::::::                      :::::::::: :::::: ::::::::  ::.
+         .   .  : ::::  ::                    ::::  : ::    :::::::: : ::  :    .      .
+            . 55555 :3333: 00000   44   44   00000   44   44 111111  66666 55555 .
+           . 55     33    00   00  444  44  00   00  44   44   11   66     55     .         .
+ .         . 55     33   00     00 44 4 44 00     00 444 444   11   66     555555 .
+           . 55 555 3333 00     00 44  444 00     00 44 4 44   11   66         55 .
+           . 55   5 33    00   00  44   44  00   00  44   44   11   66        555 .     .
+            . 55555 :3333: 00000   44   44   00000   44   44 111111  66666 55555 .         .
+      .      .    : ::::::::               :::::::::: ::              ::  :   : .
+     .         .:    :::::                    :::::: :::             :::::::  .      .
+  .              .    :::                      :::::  ::              ::::: .              . 
+           .        .  ::                      ::::                      .
+                          . ::                                     .                .
+
 
 -------------------------------------------------------
 
@@ -162,6 +178,7 @@ Disclaimer
 ----------
 **Geonomics** claims no affiliation with the philosophy and economic ideology
 `Georgism <https://en.wikipedia.org/wiki/Georgism>`_, sometimes referred to as
-'geonomics'. It is a portmanteau of **geo**\graphy and ge\ **nomics**.
+'geonomics'.
 
-We just thought it sounded neat, and found it delightfully confusing.
+Rather, it is a portmanteau of **geo**\graphy and ge\ **nomics**.
+We thought it sounded neat, and found it delightfully confusing.

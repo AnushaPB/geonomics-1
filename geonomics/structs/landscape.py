@@ -201,7 +201,7 @@ class Landscape(dict):
     Representation of a multi-layer (i.e. multivariate) landscape.
 
     Organized as a dict of multiple, serial integer-keyed Layer objects,
-    
+
     Because the Landscape class inherits from `dict`, Layers can
     be indexed out using their index-number keys (e.g. `mod.land[<idx>]`).
 
@@ -231,11 +231,11 @@ class Landscape(dict):
             (i.e. cell sizes) of the layer.  (Must be the same as the
             Landscape to which the Layer belongs.)
 
-        ulc: 
+        ulc:
             The x,y (i.e. lon,lat; or i,j in array terms) coordinates of the
             upper left corner of the layer. (Must be the same as the Landscape
             to which the Layer belongs.)
-            
+
     """
 
     #######################
@@ -567,12 +567,12 @@ def _make_landscape(mod, params, num_hab_types=2, verbose=False):
                 "key '%s') appears to have parameters for more than one layer "
                 "type.  Choose a single layer type (valid values: 'random', "
                 "'defined', 'file', 'nlmpy') and provide a sub-dictionary "
-                "of parameters for only that type.") % (n, str(k)))
+                "of parameters for only that type.") % (n, str(lyr_name)))
         lyr_type = init_keys[0]
         assert lyr_type in ['random', 'defined', 'file', 'nlmpy'], ("The "
             "parameters sub-dictionary for the %ith layer (params['land']"
             "['layers'] key '%s') has an invalid key value. Valid keys are: "
-            "'random', 'defined', 'file'.") % (n, str(k))
+            "'random', 'defined', 'file'.") % (n, str(lyr_name))
 
         #create a random lyr, if called for
         if lyr_type == 'random':
@@ -642,6 +642,9 @@ def _make_landscape(mod, params, num_hab_types=2, verbose=False):
                                     file_lyr_params['coord_precs'])]
 
     #create the land object
+    #for lyr_name, lyr in lyrs.items():
+    #    lyrs[lyr_name].rast[lyrs[lyr_name].rast<0] = 0
+    #    lyrs[lyr_name].rast[lyrs[lyr_name].rast>1] = 1
     land = Landscape(lyrs, res=res, ulc=ulc, prj=prj, mod=mod)
 
     # set all Layers' cell-bounds attributes

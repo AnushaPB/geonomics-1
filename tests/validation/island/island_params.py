@@ -245,6 +245,7 @@ params = {
                     'n_recomb_paths_tot':       int(1e5),
                     'n_recomb_sims':            100_000,
                     'allow_ad_hoc_recomb':      False,
+                    'jitter_breakpoints':       False,
                     #whether to save mutation logs
                     'mut_log':                  False,
 
@@ -311,7 +312,7 @@ params = {
                 #collection radius around points, for point & transect sampling
                 'radius':               None,
                 #when to collect data
-                'when':                 10,
+                'when':                 100,
                 #whether to save current Layers when data is collected
                 'include_landscape':    False,
                 #whether to include fixed loci in VCF files

@@ -35,7 +35,7 @@ import statsmodels.api as sm
 # function defs
 ###############
 
-def map_genetic_PCA(mod):
+def map_genetic_PCA(mod, mark_size):
     """run genetic PCA and mapping individuals colored in RGB
     space by the first 3 PCs"""
     species = mod.comm[0]
@@ -114,7 +114,6 @@ def plot_genetic_PCA(mod):
     ax1.set_xlabel('genetic PC 1')
     ax1.set_ylabel('genetic PC 2')
     ax1.legend(patches, ['left of barrier', 'right of barrier'])
-
 
 
 # calculate euclidean distance from two n-length vectors
@@ -250,11 +249,15 @@ def fix_yax_n_ticks_digits(ax, vals, n_ticks, n_digits):
 # set some plotting params
 img_dir = ('/home/drew/Desktop/stuff/berk/research/projects/sim/methods_paper/'
            'img/final/')
-ax_fontdict = {'fontsize': 12,
+ax_fontdict = {'fontsize': 65,
                'name': 'Bitstream Vera Sans'}
-ttl_fontdict = {'fontsize': 15,
+ze_ax_fontdict = {'fontsize': 35,
+                  'name': 'Bitstream Vera Sans'}
+threed_ax_fontdict = {'fontsize': 35,
+                  'name': 'Bitstream Vera Sans'}
+ttl_fontdict = {'fontsize': 65,
                 'name': 'Bitstream Vera Sans'}
-mark_size = 15
+mark_size = 275
 
 
 def _make_params():
@@ -515,6 +518,7 @@ def _make_params():
                         'n_recomb_sims':            10000,
                         'start_neut_zero':          False,
                         'allow_ad_hoc_recomb':      False,
+                        'jitter_breakpoints':       False,
                         #whether to save mutation logs
                         'mut_log':                  False,
 
@@ -620,91 +624,98 @@ def _run(params, save_figs=False, time_it=False,
     ###############
     # set up figure
     ###############
-    nrows = 14 
-    ncols = 8
+    nrows = 13
+    ncols = 4
     ratio = ncols/nrows
     vert_size = 11 # length of figure's vertical dimension
-    fig = plt.figure(figsize=(vert_size, vert_size*ratio))
+    #fig = plt.figure(figsize=(vert_size, vert_size*ratio))
     plt.subplots_adjust(left=0.05, bottom=0.07, right=0.98, top=0.96, wspace=0.07,
                         hspace=0.16)
-    gs = gridspec.GridSpec(nrows, ncols,
-                          height_ratios=[1]*8 + [1.5]*6,
-                          width_ratios=[1,1,1,0.7,0.7,1,1,1])
+    gs = gridspec.GridSpec(nrows, ncols)
+                          #height_ratios=[1]*8 + [1.5]*6,
+                          #width_ratios=[1,1,1,0.7,0.7,1,1,1])
 
     #fig bounds
     gen_b4_top = 0
-    gen_b4_bot = 4
+    gen_b4_bot = 3
     gen_b4_L = 0
-    gen_b4_R = 3
+    gen_b4_R = 2
 
     gen_af_top = 0
-    gen_af_bot = 4
-    gen_af_L = 5
-    gen_af_R = 8
+    gen_af_bot = 3
+    gen_af_L = 2
+    gen_af_R = 4
 
-    ze_fit_top = 0
-    ze_fit_bot = 8
-    ze_fit_L = 3
-    ze_fit_R = 5
+    ze_fit_top = 6
+    ze_fit_bot = 10
+    ze_fit_L = 1
+    ze_fit_R = 3
 
-    phn_b4_top = 4
-    phn_b4_bot = 8
+    phn_b4_top = 3
+    phn_b4_bot = 6
     phn_b4_L = 0
-    phn_b4_R = 3
+    phn_b4_R = 2
 
-    phn_af_top = 4
-    phn_af_bot = 8
-    phn_af_L = 5
-    phn_af_R = 8
+    phn_af_top = 3
+    phn_af_bot = 6
+    phn_af_L = 2
+    phn_af_R = 4
 
-    n1_3d_top = 8
-    n1_3d_bot = 14
+    n1_3d_top = 10
+    n1_3d_bot = 13
     n1_3d_L = 0
-    n1_3d_R = 4
+    n1_3d_R = 2
 
-    n3_3d_top = 8
-    n3_3d_bot = 14
-    n3_3d_L = 4
-    n3_3d_R = 8
+    n3_3d_top = 10
+    n3_3d_bot = 13
+    n3_3d_L = 2
+    n3_3d_R = 4
 
     # BEFORE-SIM AXES
-    gen_b4_ax = fig.add_subplot(gs[gen_b4_top:gen_b4_bot,
-                                   gen_b4_L:gen_b4_R], aspect='equal')
+    gen_b4_ax = plt.subplots(1,1)[1]
+    #gen_b4_ax = fig.add_subplot(gs[gen_b4_top:gen_b4_bot,
+    #                               gen_b4_L:gen_b4_R], aspect='equal')
     gen_b4_ax.set_ylabel('genotype', fontdict=ax_fontdict)
     gen_b4_ax.set_title('before simulation', fontdict=ttl_fontdict)
-    phn_b4_ax = fig.add_subplot(gs[phn_b4_top:phn_b4_bot,
-                                   phn_b4_L:phn_b4_R], aspect='equal')
+    phn_b4_ax = plt.subplots(1,1)[1]
+    #phn_b4_ax = fig.add_subplot(gs[phn_b4_top:phn_b4_bot,
+    #                               phn_b4_L:phn_b4_R], aspect='equal')
     phn_b4_ax.set_ylabel('phenotype', fontdict=ax_fontdict)
 
     # AFTER-SIM AXES
-    gen_af_ax = fig.add_subplot(gs[gen_af_top:gen_af_bot,
-                                   gen_af_L:gen_af_R], aspect='equal')
+    gen_af_ax = plt.subplots(1,1)[1]
+    #gen_af_ax = fig.add_subplot(gs[gen_af_top:gen_af_bot,
+    #                               gen_af_L:gen_af_R], aspect='equal')
     gen_af_ax.set_title('after simulation', fontdict=ttl_fontdict)
-    gen_af_ax.set_ylabel('genotype', fontdict=ax_fontdict)
-    phn_af_ax = fig.add_subplot(gs[phn_af_top:phn_af_bot,
-                                   phn_af_L:phn_af_R], aspect='equal')
-    phn_af_ax.set_ylabel('phenotype', fontdict=ax_fontdict)
+    #gen_af_ax.set_ylabel('genotype', fontdict=ax_fontdict)
+    phn_af_ax = plt.subplots(1,1)[1]
+    #phn_af_ax = fig.add_subplot(gs[phn_af_top:phn_af_bot,
+    #                               phn_af_L:phn_af_R], aspect='equal')
+    #phn_af_ax.set_ylabel('phenotype', fontdict=ax_fontdict)
 
     #--------
     # 3D AXES
     #--------
     # num 1
-    n1_3d_ax = fig.add_subplot(gs[n1_3d_top:n1_3d_bot,
-                                  n1_3d_L:n1_3d_R], projection='3d')
+    n1_3d_ax = plt.figure().add_subplot(111, projection='3d')
+    #n1_3d_ax = fig.add_subplot(gs[n1_3d_top:n1_3d_bot,
+                                  #n1_3d_L:n1_3d_R], projection='3d')
     n1_3d_ax.view_init(elev=3, azim=83)
-    n1_3d_ax.set_xlabel('$\longleftarrow$ geo. dist.', size=9, labelpad=-13)
+    n1_3d_ax.set_xlabel('$\longleftarrow$ geo. dist.', labelpad=-13,
+                        fontdict=threed_ax_fontdict)
     #n1_3d_ax.set_ylabel(' ' * 35 + '$\longleftarrow$ Env. Dist.', size=9,
     #                    labelpad=20)
     n1_3d_ax.zaxis.set_rotate_label(False)
-    n1_3d_ax.set_zlabel('gen. dist. $\longrightarrow$', size=9, labelpad=-13,
-                        rotation=90)
+    n1_3d_ax.set_zlabel('gen. dist. $\longrightarrow$', labelpad=-13,
+                        rotation=90, fontdict=threed_ax_fontdict)
     n1_3d_ax.set_xticklabels([])
     n1_3d_ax.set_yticklabels([])
     n1_3d_ax.set_zticklabels([])
     n1_3d_ax.set_title("", pad=-260)
     # num 2
-    ze_fit_ax_L = fig.add_subplot(gs[ze_fit_top:ze_fit_bot,
-                                     ze_fit_L:ze_fit_R])
+    ze_fit_ax_L = plt.subplots(1,1)[1]
+    #ze_fit_ax_L = fig.add_subplot(gs[ze_fit_top:ze_fit_bot,
+    #                                 ze_fit_L:ze_fit_R])
     ze_fit_ax_R = ze_fit_ax_L.twinx()
     #n2_3d_ax = fig.add_subplot(gs[2, 3:6], projection='3d')
     #n2_3d_ax.view_init(elev=25, azim=225)
@@ -718,15 +729,17 @@ def _run(params, save_figs=False, time_it=False,
     #n2_3d_ax.set_zticklabels([])
 
     # num 3
-    n3_3d_ax = fig.add_subplot(gs[n3_3d_top:n3_3d_bot,
-                                  n3_3d_L:n3_3d_R], projection='3d')
+    n3_3d_ax = plt.figure().add_subplot(111, projection='3d')
+    #n3_3d_ax = fig.add_subplot(gs[n3_3d_top:n3_3d_bot,
+    #                              n3_3d_L:n3_3d_R], projection='3d')
     n3_3d_ax.view_init(elev=3, azim=7)
-    #n3_3d_ax.set_xlabel('$\longleftarrow$ Geo. Dist.' + ' ' * 25, size=9,
-    #                    labelpad=10)
-    n3_3d_ax.set_ylabel('env. dist. $\longrightarrow$', size=9, labelpad=-13)
+    n3_3d_ax.set_zlabel('gen. dist. $\longrightarrow$', labelpad=-13,
+                        rotation=90, fontdict=threed_ax_fontdict)
+    n3_3d_ax.set_ylabel('env. dist. $\longrightarrow$', labelpad=-13,
+                        fontdict=threed_ax_fontdict)
     n3_3d_ax.zaxis.set_rotate_label(False)
-    n3_3d_ax.set_zlabel('gen. dist. $\longrightarrow$', size=9, labelpad=-13,
-                        rotation=90)
+    #n3_3d_ax.set_zlabel('gen. dist. $\longrightarrow$', size=12, labelpad=-13,
+    #                    rotation=90)
     n3_3d_ax.set_xticklabels([])
     n3_3d_ax.set_yticklabels([])
     n3_3d_ax.set_zticklabels([])
@@ -782,7 +795,7 @@ def _run(params, save_figs=False, time_it=False,
 
     # plot genetic PCA before evolution begins
     plt.sca(gen_b4_ax)
-    map_genetic_PCA(mod)
+    map_genetic_PCA(mod, mark_size)
 
     # plot phenotypes before evolution begins
     mask = np.ma.masked_where(mod.land[1].rast == 0, mod.land[1].rast)
@@ -817,7 +830,7 @@ def _run(params, save_figs=False, time_it=False,
 
     # plot genetic PCA after 1/4T timesteps
     plt.sca(gen_af_ax)
-    map_genetic_PCA(mod)
+    map_genetic_PCA(mod, mark_size)
 
     # plot the individuals' phenotypes
     plt.sca(phn_af_ax)
@@ -893,20 +906,25 @@ def _run(params, save_figs=False, time_it=False,
     for ax in [n1_3d_ax, n3_3d_ax]:#, n2_3d_ax]:
        ax.scatter(geo_dists, env_dists, scaled_gen_dists,
                   alpha=0.7, edgecolor='black', c=col3d, cmap='plasma')
-    
+
     ##########################
     # create plot of z-e diffs
     ##########################
     if not time_it:
         L_color = '#096075'
         R_color = '#bf2659'
-        ze_fit_ax_L.set_xlabel('time (steps)')
-        ze_fit_ax_L.set_ylabel(('mean $|z-e|$)'), color=L_color)
-        ze_fit_ax_L.tick_params(axis='y', labelcolor=L_color, labelrotation=45)
+        ze_fit_ax_L.set_xlabel('time (steps)', fontdict=ze_ax_fontdict)
+        ze_fit_ax_L.set_ylabel('mean($|z-e|$)', fontdict=ze_ax_fontdict,
+                               color=L_color)
+        ze_fit_ax_L.tick_params(axis='y', labelcolor=L_color, labelrotation=45,
+                               labelsize=30)
+        ze_fit_ax_L.tick_params(axis='x', labelsize=30)
         ze_fit_ax_L.plot(range(len(mean_z_e_diffs)), mean_z_e_diffs, color=L_color)
         fix_yax_n_ticks_digits(ze_fit_ax_L, mean_z_e_diffs, 5, 2)
-        ze_fit_ax_R.set_ylabel('mean fitness', color=R_color)
-        ze_fit_ax_R.tick_params(axis='y', labelcolor=R_color, labelrotation=-45)
+        ze_fit_ax_R.set_ylabel('mean fitness', color=R_color,
+                               fontdict=ze_ax_fontdict)
+        ze_fit_ax_R.tick_params(axis='y', labelcolor=R_color,
+                                labelrotation=-45, labelsize=30)
         ze_fit_ax_R.plot(range(len(mean_fits)), mean_fits, color=R_color)
         fix_yax_n_ticks_digits(ze_fit_ax_R, mean_fits, 5, 3)
         #ax.set_xlabel('time')
@@ -916,8 +934,8 @@ def _run(params, save_figs=False, time_it=False,
         #if save_figs:
         #    fig.savefig('IBD_IBE_z-e_plot.png', format='png', dpi=1000)
 
-        fig.tight_layout()
-        fig.show()
+        #fig.tight_layout()
+        #fig.show()
         if save_figs:
                 fig.savefig('IBD_IBE.png', format='png', dpi=1000)
 

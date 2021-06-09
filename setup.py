@@ -8,7 +8,7 @@ def readme():
 setuptools.setup(
     name='geonomics',
     # version num.: MAJOR.MINOR.PATCH
-    version='0.0.37',
+    version='1.1.5',
     author='Drew Ellison Hart',
     author_email='drew.ellison.hart@gmail.com',
     description='A package for landscape genomic simulation',
@@ -16,7 +16,7 @@ setuptools.setup(
     long_description_content_type='text/x-rst',
     url='https://github.com/drewhart/geonomics',
     # include the download URL, from the latest release on Github
-    download_url='https://github.com/drewhart/geonomics/archive/0.0.37.tar.gz',
+    download_url='https://github.com/drewhart/geonomics/archive/1.1.5.tar.gz',
     include_package_data=True,
     # packages=setuptools.find_packages(),
     packages=['geonomics',
@@ -44,10 +44,10 @@ setuptools.setup(
         'Source': 'https://github.com/drewhart/geonomics',
         # 'Tracker': 'BUGTRACKERSITHERE',
     },
-    install_requires=['numpy', 'matplotlib>=3.0.0', 'pandas>=0.23.4', 'geopandas',
-                      'scipy>=1.3.1', 'scikit-learn', 'statsmodels>=0.9.0',
-                      'shapely', 'bitarray', 'pyvcf', 'rasterio',
-                      'msprime>=0.7.4', 'tskit>=0.2.3'],
+#    install_requires=['numpy', 'matplotlib>=3.0.0', 'pandas>=0.23.4', 'geopandas',
+#                      'scipy>=1.3.1', 'scikit-learn', 'statsmodels>=0.9.0',
+#                      'shapely', 'bitarray', 'rasterio',
+#                      'msprime>=0.7.4', 'tskit>=0.2.3'],
     extras_require={'simulation on neutral landscape models': ['nlmpy'],
                    '3d plots for Yosemite demo': ['pykrige']},
     python_requires='>=3.6',
